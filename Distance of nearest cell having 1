@@ -1,0 +1,65 @@
+Given a binary grid of n*m. Find the distance of the nearest 1 in the grid for each cell.
+The distance is calculated as |i1  - i2| + |j1 - j2|, where i1, j1 are the row number and column number of the current cell, and i2, j2 are the row number and column number of the nearest cell having value 1.
+ 
+(Medium)
+
+Example 1:
+
+Input: grid = {{0,1,1,0},{1,1,0,0},{0,0,1,1}}
+Output: {{1,0,0,1},{0,0,1,1},{1,1,0,0}}
+Explanation: The grid is-
+0 1 1 0 
+1 1 0 0 
+0 0 1 1 
+0's at (0,0), (0,3), (1,2), (1,3), (2,0) and
+(2,1) are at a distance of 1 from 1's at (0,1),
+(0,2), (0,2), (2,3), (1,0) and (1,1)
+respectively.
+
+
+Solution:
+
+vector<vector<int>>ans;
+    //Function to find distance of nearest 1 in the grid for each cell.
+	vector<vector<int>>nearest(vector<vector<int>>grid)
+	{
+	    int m=grid.size(),n=grid[0].size();
+	    ans.resize(m,vector<int>(n,INT_MAX));
+	    
+	    for(auto i=0;i<m;i++)
+	    {
+	        for(auto j=0;j<n;j++)
+	        {
+	            if(grid[i][j]){
+	                ans[i][j]=0;
+	            }
+	        }
+	    }
+	    
+	    for(auto i=0;i<m;i++)
+	    {
+	        for(auto j=0;j<n;j++)
+	        {
+	            if(grid[i][j]){
+	                dfs(i,j,grid,0);
+	            }
+	        }
+	    }
+	    return ans;
+	    
+	}
+	
+	void dfs(int i, int j,vector<vector<int>>&grid,int steps){
+	    int m=grid.size(),n=grid[0].size();
+	    vector<pair<int,int>>dr={{-1,0},{0,-1},{0,1},{1,0}};
+	    
+	    for(auto d:dr)
+	    {
+	        int x=d.first+i,y=d.second+j;
+	        if(x<0|| y<0|| x>=m|| y>=n )continue;
+	        if(ans[x][y]>steps+1){
+	            ans[x][y]=steps+1;
+	            dfs(x,y,grid,steps+1);
+	        }
+	    }
+	}
