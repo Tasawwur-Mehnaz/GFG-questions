@@ -1,0 +1,53 @@
+You are given a binary string str. In a single operation, you can choose two indices L and R such that 1 ≤ L ≤ R ≤ N and complement the characters between L and R 
+i.e strL, strL+1, , strR. By complement, we mean change character 0 to 1 and vice-versa.
+You task is to perform ATMOST one operation such that in final string number of 1s is maximised. If there is no need to completement, i.e.,
+string contains all 1s, return -1. Else, return the two values denoting L and R. If there are multiple solutions, return the lexicographically smallest pair of L and R.
+
+Example 1:
+
+Input:
+N = 3
+str = "111"
+Output: -1
+Explanation: As all characters are '1', 
+so don't need to complement any.
+Example 2:
+
+Input:
+N = 2
+str = "01"
+Output: 1 1
+Explanation: After complementing [1, 1] 
+the string becomes "11".
+
+
+Solution:
+
+vector<int> findRange(string str, int n) {
+        int mx=0,count=0;
+        int l=0,r=0,start=0;
+        int i=0;
+        while(i<n)
+        {
+            if(str[i]=='0')
+              count++;
+             else
+               count--;
+            if(mx<count)
+            {
+                mx=count;
+                r=i+1;
+                l=start+1;
+            }
+            if(count<0)
+            {
+                count=0;
+                start=i+1;
+            }
+            
+            i++;
+        }
+        if(mx==0)
+         return {-1};
+        return {l,r};
+    }
