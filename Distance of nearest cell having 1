@@ -46,7 +46,6 @@ vector<vector<int>>ans;
 	        }
 	    }
 	    return ans;
-	    
 	}
 	
 	void dfs(int i, int j,vector<vector<int>>&grid,int steps){
