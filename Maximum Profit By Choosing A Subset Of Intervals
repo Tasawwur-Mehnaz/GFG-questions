@@ -18,6 +18,7 @@ One can choose intervals [1, 2, 4] and [2, 4, 4] for a
 profit of 8.
 
 
+
 Solution:
 
 static bool comp(vector<int>&a,vector<int>&b)
