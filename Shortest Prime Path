@@ -1,0 +1,68 @@
+You are given two four digit prime numbers Num1 and Num2. Find the distance of the shortest path from Num1 to Num2 that can be attained by altering only one single 
+digit at a time. Every number obtained after changing a digit should be a four digit prime number with no leading zeros.
+
+
+Example 1:
+
+Input:
+Num1 = 1033 
+Num2 = 8179
+Output: 6
+Explanation:
+1033 -> 1733 -> 3733 -> 3739 -> 3779
+                 -> 8779 -> 8179.
+There are only 6 steps required to reach
+Num2 from Num1, and all the intermediate
+numbers are 4 digit prime numbers.
+
+
+Solution:
+
+bool isprime(int n)
+    {
+        for(int i=2;i<=sqrt(n);i++)
+        {
+            if(n%i==0)
+               return false;
+        }
+        return true;
+    }
+    int shortestPath(int num1,int num2)
+    {   
+       if(num1==num2)
+         return 0;
+       unordered_set<int> prime;
+       for(int i=1000;i<=9999;i++)
+       {
+           if(isprime(i))
+             prime.insert(i);
+       }
+       queue<pair<string,int>> q;
+       string n2=to_string(num2);
+       q.push({to_string(num1),0});
+       prime.erase(num1);
+       while(!q.empty())
+       {
+           auto temp=q.front();
+           q.pop();
+           if(temp.first==n2)
+             return temp.second;
+           string s=temp.first;
+           int c=temp.second;
+           for(int pos=0;pos<4;pos++)
+           {
+               for(int i=0;i<=9;i++)
+               {
+                   if(s[pos]!=i+'0')
+                   {
+                       string s1=s;
+                       s1[pos]=i+'0';
+                       if(prime.find(stoi(s1))!=prime.end())
+                         q.push({s1,c+1});
+                         prime.erase(stoi(s1));
+                   }
+               }
+           }
+       }
+       return -1;
+    }
