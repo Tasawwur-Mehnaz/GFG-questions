@@ -1,0 +1,67 @@
+Given an array of integers of size n and an integer k, find all the pairs in the array whose absolute difference is divisible by k.
+
+Example 1:
+
+Input:
+n = 3
+arr[] = {3, 7, 11}
+k = 4
+Output:
+3
+Explanation:
+(11-3) = 8 is divisible by 4
+(11-7) = 4 is divisible by 4
+(7-3) = 4 is divisible by 4
+
+Solution:
+
+long long countPairs(int n, int arr[], int k) {
+       unordered_map<int,int> m;
+       long long ans=0;
+       for(int i=0;i<n;i++)
+       {
+           if(m.find(arr[i]%k)!=m.end())
+             ans+=m[arr[i]%k];
+           m[arr[i]%k]++;
+       }
+       return ans;
+    }
+    
+    
+ OR
+ 
+ Step 1 - Find the remainder for all the elements, when divide by K.
+Suppose (a-b) is divisible by K, that means a%k = b%k. Because (a-b) is divisible by K,
+So, (a-b)%k = 0.
+a%k - b%k = 0.
+a%k = b%k. (Proved).
+
+Step 2 - Store the frequency of remainders in the map.
+
+Step 3 - Now, select any two elements from the same frequency. (i.e if frequency of any remainder is P, then total pair will be (P*(P-1))/2.
+
+Step 4 - Finally Return ans.
+
+
+//Here is the Code.................
+
+class Solution {
+
+  public:
+
+    long long countPairs(int n, int arr[], int k) {
+
+        map<int, int>mp;
+        for(int i=0; i<n; i++){
+            mp[arr[i]%k]++;
+
+        }
+
+        long long ans=0;
+        for(auto it:mp)
+        ans+=(it.second*(it.second-1))/2;
+        return ans;
+
+    }
+
+};
