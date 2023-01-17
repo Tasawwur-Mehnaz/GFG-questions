@@ -1,0 +1,68 @@
+Given a binary tree. The task is to find the maximum GCD of the siblings of this tree. You have to return the value of the node whose two immediate children has 
+the maximum gcd.
+If there are multiple such nodes, return the node which has the maximum value.
+
+Siblings: Nodes with the same parent are called siblings.
+
+GCD (Greatest Common Divisor) of two positive integers is the largest positive integer that divides both numbers without a remainder.
+
+Note:
+Return 0 if input tree is empty i.e level of tree is -1.
+Consider those nodes which have a sibling.
+Return 0 if no such pair of siblings found.
+ 
+
+Example 1:
+
+Input:
+              4
+            /   \
+           5     2
+                /  \
+               3    1
+              /  \
+             6   12
+
+Output: 3
+Explanation: For the above tree, the maximum
+GCD for the siblings is formed for nodes 6 and 12
+for the children of node 3.
+
+
+solution:
+
+
+int an=INT_MIN;
+    int k=0;
+    void dfs(Node* root)
+    {
+        if(root==NULL)
+        {
+            return ;
+        }
+        dfs(root->left);
+        if((root->left!=NULL)&&(root->right!=NULL))
+        {
+            if(__gcd(root->left->data,root->right->data)>an)
+           {
+
+              k=root->data;
+
+              an=__gcd(root->left->data,root->right->data);
+
+           }
+        }
+
+        dfs(root->right);
+    }
+
+    int maxGCD( Node* root)
+    {
+        if(root==NULL)
+        {
+            return 0;
+        }
+
+        dfs(root);
+        return k;
+    }
