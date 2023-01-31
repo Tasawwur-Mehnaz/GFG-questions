@@ -1,0 +1,35 @@
+Given two strings A and B. Find minimum number of times A has to be repeated such that B is a Substring of it. 
+If B can never be a substring then return -1.
+
+Example 1:
+
+Input:
+A = "abcd"
+B = "cdabcdab"
+Output:
+3
+Explanation:
+Repeating A three times (abcdabcdabcd),
+B is a substring of it. B is not a substring
+of A when it is repeated less than 3 times.
+
+
+Solution:
+
+int minRepeats(string A, string B) {
+       int ans=1;
+       int a=A.length();
+       string ta=A;
+       int b=B.length();
+       while(A.length()<B.length())
+       {
+           A=A+ta;
+           ans++;
+       }
+       if(A.find(B)!=-1)
+         return ans;
+       A+=ta;
+       if(A.find(B)!=-1)
+         return ans+1;
+       return -1;
+    }
