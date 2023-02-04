@@ -1,0 +1,31 @@
+Given an array Arr of size N containing positive integers. Find the maximum sum of a subsequence such that no two numbers in the sequence should be adjacent in the array.
+
+Example 1:
+
+Input:
+N = 6
+Arr[] = {5, 5, 10, 100, 10, 5}
+Output: 110
+Explanation: If you take indices 0, 3
+and 5, then Arr[0]+Arr[3]+Arr[5] =
+5+100+5 = 110.
+
+
+Solution:
+
+int process(int ind,vector<int> &dp,int n,int *arr)
+	{
+	    if(ind>=n)
+	      return 0;
+	    if(dp[ind]!=-1)
+	      return dp[ind];
+	    int take=arr[ind]+process(ind+2,dp,n,arr);
+	    int nottake=0+process(ind+1,dp,n,arr);
+	    return dp[ind]=max(take,nottake);
+	}
+	int findMaxSum(int *arr, int n) 
+	{
+	    vector<int> dp(n,-1);
+	    return process(0,dp,n,arr);
+	    
+	}
