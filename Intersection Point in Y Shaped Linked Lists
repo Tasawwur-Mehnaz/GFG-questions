@@ -1,0 +1,78 @@
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+
+Example 1:
+
+Input:
+LinkList1 = 3->6->9->common
+LinkList2 = 10->common
+common = 15->30->NULL
+Output: 15
+Explanation:
+Y ShapedLinked List
+
+
+Solution:
+
+JAVA:
+
+int intersectPoint(Node head1, Node head2)
+	{
+         Node cur1 = head1 , cur2 = head2;
+         boolean travel1 = false , travel2 = false;
+         while(!travel1 || !travel2){
+             cur1 = cur1.next;
+             cur2 = cur2.next;
+             if(cur1 == null){
+                 cur1 = head2;
+                 travel1 = true;
+             }
+             if(cur2 == null){
+                 cur2 = head1;
+                 travel2 = true;
+             }
+         }
+         while(cur1 != null){
+             if(cur1 == cur2) return cur1.data;
+             cur1 = cur1.next;
+             cur2 = cur2.next;
+         }
+         return -1;
+	}
+  
+  
+C++:
+
+int length(Node* n)
+{
+    int len=0;
+    while(n!=NULL)
+    {
+        len++;
+        n=n->next;
+    }
+    return len;
+}
+    int intersectPoint(Node* head1, Node* head2)
+    {
+        Node* cur1 = head1 ;
+        Node* cur2 = head2;
+        int l1=length(head1);
+        int l2=length(head2);
+        while(l1>l2)
+        {
+            cur1=cur1->next;
+            l1--;
+        }
+        while(l2>l1)
+        {
+            cur2=cur2->next;
+            l2--;
+        }
+         while(cur1 != NULL && cur2!=NULL)
+         {
+             if(cur1 == cur2) return cur1->data;
+             cur1 = cur1->next;
+             cur2 = cur2->next;
+         }
+         return -1;
+    }
