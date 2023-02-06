@@ -1,0 +1,51 @@
+Given a Binary Search Tree with unique node values and a target value. You have to find the node whose data is equal to target and return the sum of all descendant node's data which are vertically below the target node. Initially, you are at the root node.
+Note: If target node is not present in bst then return -1.
+
+Example 1:
+
+Input:
+
+35
+25 20 35 15 22 30 45 N N N N N 32 N N
+Target = 35
+Output: 32
+Explanation: Vertically below 35 is 32.
+
+Solution:
+
+class Solution{
+public:
+    long long int ans=0;
+    int l=5;
+    bool flag=false;
+    Node *start=NULL;
+    void process(Node *root,int col,int target)
+    {
+        if(root==NULL)
+          return;
+        if(!flag && root->data==target)
+        {
+            l=col;
+            start=root;
+            return;
+        }
+        if(flag && col==l)
+          ans+=root->data;
+        
+        process(root->left,col-1,target);
+        process(root->right,col+1,target);
+        
+        
+    }
+    long long int verticallyDownBST(Node *root,int target){
+       if(root==NULL)
+         return -1;
+       process(root,0,target);
+       flag=true;
+       if(start==NULL)
+        return -1;
+       process(start,l,target);
+       return ans-start->data;
+       
+    }
+ };
