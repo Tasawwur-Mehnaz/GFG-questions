@@ -1,0 +1,68 @@
+You are given a Binary Search Tree and a target value. You must find the maximum difference between the sum of node data from root to target and from target to a child leaf node (target exclusive). Initially, you are at the root node.
+Note: If the target node is not present in the tree then return -1.
+
+Example 1:
+
+Input:
+
+
+Target = 20
+Output: 10
+Explanation: From root to target the sum of node data is 25 and from target to the children leaf nodes the sums of the node data are 15 and 25. So, the maximum difference will be (25-15) = 10.
+
+
+
+Solution:
+
+
+class Solution{
+public:
+   int sum1=0,sum2=0;
+    Node*  process(Node *root,int target)
+    {
+        if(root==NULL)
+          return NULL;
+        sum1+=root->data;
+        if(root->data==target)
+        {
+            return root;
+        }
+        else if(root->data>target)
+        {
+            process(root->left,target);
+        }
+        else
+          process(root->right,target);
+        
+    }
+    
+    int traversal(Node *root)
+    {
+       if(root->left==NULL && root->right==NULL)
+       {
+           return root->data;
+       }
+       int mini=INT_MAX;
+       if(root->left)
+       {
+           mini=min(mini,traversal(root->left));
+       }
+       if(root->right)
+       {
+           mini=min(mini,traversal(root->right));
+       } 
+       return mini+root->data;
+       
+    }
+
+    int maxDifferenceBST(Node *root,int target){
+        
+        Node* f=process(root,target);
+        if(f==NULL)
+          return -1;
+        sum2=traversal(f);
+        // cout<<sum1<<" "<<sum2<<endl;
+        return sum1-sum2;
+        
+    }
+};
